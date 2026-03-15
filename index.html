@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crosswire — The Structural Word Puzzle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+
+    <header>
+      <div class="date-line" id="date-line"></div>
+      <h1 class="title">CROSSWIRE</h1>
+      <div class="tagline">The structural word puzzle</div>
+      <div class="rule-thick"></div>
+      <div class="rule-thin"></div>
+    </header>
+
+    <main>
+
+      <!-- Puzzle meta + Letter slots -->
+      <section class="slots-section">
+        <div class="puzzle-meta">
+          <span class="category" id="category"></span>
+          <span class="puzzle-num" id="puzzle-num"></span>
+        </div>
+        <div class="slots" id="slots"></div>
+      </section>
+
+      <!-- Clues -->
+      <section class="clues-section">
+        <div class="section-label">CLUES</div>
+
+        <div class="clue free-clue">
+          <span class="clue-tag free-tag">FREE</span>
+          <span class="clue-text" id="free-clue-text"></span>
+        </div>
+
+        <div id="clue-bank"></div>
+      </section>
+
+      <!-- Guess input -->
+      <section class="guess-section">
+        <div class="section-label">YOUR GUESS</div>
+        <div class="input-row">
+          <input
+            type="text"
+            id="guess-input"
+            maxlength="12"
+            placeholder="TYPE A WORD"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="characters"
+            spellcheck="false"
+          >
+          <button id="submit-btn">SUBMIT</button>
+        </div>
+        <div class="feedback" id="feedback"></div>
+      </section>
+
+      <!-- Score -->
+      <section class="score-section">
+        <div class="score-item">
+          <span class="score-label">CLUES USED</span>
+          <span class="score-value" id="clues-used">0</span>
+        </div>
+        <span class="score-sep">·</span>
+        <div class="score-item">
+          <span class="score-label">WRONG GUESSES</span>
+          <span class="score-value" id="wrong-guesses">0</span>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Win overlay -->
+  <div class="win-overlay" id="win-overlay" aria-hidden="true" hidden>
+    <div class="win-card">
+      <div class="win-eyebrow">SOLVED</div>
+      <div class="win-score-label" id="win-score-label"></div>
+      <div class="win-stats" id="win-stats"></div>
+      <div class="share-card" id="share-card"></div>
+      <button class="share-btn" id="share-btn">COPY RESULT</button>
+      <div class="copied-msg" id="copied-msg" aria-live="polite"></div>
+      <div class="streak-line" id="streak-line"></div>
+    </div>
+  </div>
+
+  <script src="puzzles.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

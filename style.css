@@ -1,0 +1,495 @@
+/* ─────────────────────────────────────────────
+   CROSSWIRE — Stylesheet
+   Newspaper / editorial aesthetic
+   ───────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --cream:   #f4efe4;
+  --ink:     #1a1a14;
+  --mid:     #6b6660;
+  --border:  #ccc5b0;
+  --gold:    #b8860b;
+  --gold-bg: #f5e6b8;
+  --green:   #2e6e3e;
+  --green-bg:#c8e6d0;
+  --red:     #8b1a1a;
+}
+
+html, body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1.25rem 5rem;
+}
+
+
+/* ── MASTHEAD ─────────────────────────────── */
+
+header {
+  text-align: center;
+  padding: 1.75rem 0 0;
+}
+
+.date-line {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: var(--mid);
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 9vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 0.35rem;
+}
+
+.tagline {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--mid);
+  margin-bottom: 0.9rem;
+}
+
+.rule-thick {
+  height: 3px;
+  background: var(--ink);
+}
+
+.rule-thin {
+  height: 1px;
+  background: var(--ink);
+  margin-top: 3px;
+}
+
+
+/* ── MAIN ─────────────────────────────────── */
+
+main {
+  padding-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.section-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  color: var(--mid);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.9rem;
+}
+
+
+/* ── LETTER SLOTS ─────────────────────────── */
+
+.slots-section {
+  text-align: center;
+}
+
+.puzzle-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.9rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: var(--mid);
+  text-transform: uppercase;
+}
+
+.slots {
+  display: flex;
+  gap: clamp(0.3rem, 2vw, 0.6rem);
+  justify-content: center;
+}
+
+.slot {
+  width: clamp(3rem, 14vw, 4.25rem);
+  height: clamp(3rem, 14vw, 4.25rem);
+  border: 2.5px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 6vw, 2.2rem);
+  font-weight: 700;
+  background: var(--cream);
+  color: var(--ink);
+  position: relative;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+
+.slot.locked {
+  background: var(--gold-bg);
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.slot.solved {
+  background: var(--green);
+  color: var(--cream);
+  border-color: var(--green);
+  animation: popIn 0.45s cubic-bezier(0.34, 1.6, 0.64, 1) both;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.4) rotate(-4deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg);    opacity: 1; }
+}
+
+
+/* ── CLUES ────────────────────────────────── */
+
+.clue {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.clue:last-child {
+  border-bottom: none;
+}
+
+.clue-tag {
+  flex-shrink: 0;
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  padding: 0.18rem 0.45rem;
+  border: 1px solid currentColor;
+  margin-top: 0.1rem;
+  white-space: nowrap;
+  color: var(--mid);
+}
+
+.free-tag {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.cost-tag {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.clue-text {
+  flex: 1;
+}
+
+/* Banked clue rows */
+.banked-clue {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.banked-clue:last-child {
+  border-bottom: none;
+}
+
+.banked-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.clue-num {
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  color: var(--mid);
+  text-transform: uppercase;
+}
+
+.clue-locked-hint {
+  font-size: 0.7rem;
+  color: var(--border);
+  letter-spacing: 0.1em;
+}
+
+.reveal-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--cream);
+  border: none;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.reveal-btn:hover:not(:disabled) {
+  opacity: 0.75;
+}
+
+.revealed-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  animation: slideIn 0.25s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ── GUESS INPUT ──────────────────────────── */
+
+.input-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+#guess-input {
+  flex: 1;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.05rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  padding: 0.6rem 0.75rem;
+  color: var(--ink);
+  outline: none;
+  min-width: 0;
+}
+
+#guess-input:focus {
+  border-color: var(--gold);
+}
+
+#guess-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#submit-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  background: var(--ink);
+  color: var(--cream);
+  border: 2px solid var(--ink);
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+#submit-btn:hover:not(:disabled) {
+  opacity: 0.75;
+}
+
+#submit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.feedback {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  min-height: 1.2em;
+  letter-spacing: 0.03em;
+  color: var(--mid);
+}
+
+.feedback.error {
+  color: var(--red);
+}
+
+
+/* ── SCORE ────────────────────────────────── */
+
+.score-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid var(--border);
+}
+
+.score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.score-label {
+  font-size: 0.52rem;
+  letter-spacing: 0.18em;
+  color: var(--mid);
+  text-transform: uppercase;
+}
+
+.score-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.score-sep {
+  font-size: 1.5rem;
+  color: var(--border);
+  line-height: 1;
+}
+
+
+/* ── WIN OVERLAY ──────────────────────────── */
+
+.win-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 18, 12, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 200;
+  animation: fadeIn 0.3s ease;
+}
+
+.win-overlay[hidden] {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.win-card {
+  background: var(--cream);
+  border: 3px solid var(--ink);
+  padding: 2rem 1.75rem;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  animation: cardUp 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+
+@keyframes cardUp {
+  from { transform: translateY(28px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.win-eyebrow {
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  color: var(--mid);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.win-score-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+
+.win-stats {
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--mid);
+  margin-bottom: 1.5rem;
+}
+
+.share-card {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 1rem 1.1rem;
+  font-size: 0.78rem;
+  line-height: 1.8;
+  text-align: left;
+  white-space: pre;
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 1rem;
+  border: none;
+}
+
+.share-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--cream);
+  border: 2px solid var(--ink);
+  padding: 0.65rem 1.25rem;
+  width: 100%;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  margin-bottom: 0.5rem;
+}
+
+.share-btn:hover {
+  opacity: 0.75;
+}
+
+.copied-msg {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--green);
+  height: 1.2em;
+  visibility: hidden;
+  transition: visibility 0s, opacity 0.2s;
+  opacity: 0;
+}
+
+.copied-msg.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.streak-line {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  min-height: 1rem;
+}

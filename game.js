@@ -28,6 +28,7 @@
     renderClueBank();
     setupInput();
     updateScore();
+    setupOverlayClose();
   }
 
 
@@ -314,9 +315,6 @@
       streakEl.textContent = streak + '\u2002day streak';
     }
 
-    document.getElementById('close-btn').addEventListener('click', function () {
-      document.getElementById('win-overlay').hidden = true;
-    });
   }
 
   function flashCopied() {
@@ -424,6 +422,20 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+  }
+
+
+  /* ── Overlay close ──────────────────────────── */
+
+  function setupOverlayClose() {
+    // X button
+    document.getElementById('close-btn').addEventListener('click', function () {
+      document.getElementById('win-overlay').hidden = true;
+    });
+    // Click outside the card to dismiss
+    document.getElementById('win-overlay').addEventListener('click', function (e) {
+      if (e.target === this) this.hidden = true;
+    });
   }
 
 

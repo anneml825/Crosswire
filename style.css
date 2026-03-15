@@ -443,7 +443,8 @@ main {
   font-size: 0.78rem;
   line-height: 1.8;
   text-align: left;
-  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-word;
   font-family: 'IBM Plex Mono', monospace;
   margin-bottom: 1rem;
   border: none;

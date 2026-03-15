@@ -88,6 +88,13 @@ function rhymesWithAny(word, rhymeList) {
 
 
 /* ── Puzzle bank ────────────────────────────── */
+/*
+   Clue ordering rule:
+   - freeClue  : a structural fact about the word (vowel count, double
+                 letter, letter position, etc.) — always visible, free
+   - clues 1–3 : structural, increasingly specific
+   - clue 4    : the narrative "aha" hint — or a strong structural closer
+*/
 
 const PUZZLES = [
 
@@ -97,14 +104,10 @@ const PUZZLES = [
     category: 'Place',
     puzzleNum: 1,
     freeClue: {
-      text: 'You walk on it every day.',
-      check: null,
+      text: 'Contains a double letter.',
+      check: (w) => hasConsecutiveDuplicate(w),
     },
     clues: [
-      {
-        text: 'The word contains a double letter.',
-        check: (w) => hasConsecutiveDuplicate(w),
-      },
       {
         text: 'The double letter is a vowel.',
         check: (w) => hasConsecutiveDuplicateVowel(w),
@@ -115,7 +118,11 @@ const PUZZLES = [
       },
       {
         text: 'Rhymes with DOOR.',
-        check: (w) => rhymesWithAny(w, ['FLOOR','DOOR','BORE','CORE','FORE','GORE','LORE','MORE','PORE','SORE','TORE','WORE','ADORE','POUR','YOUR']),
+        check: (w) => rhymesWithAny(w, ['FLOOR','DOOR','BORE','CORE','FORE','GORE','LORE','MORE','PORE','SORE','TORE','WORE','POUR','YOUR']),
+      },
+      {
+        text: 'You walk on it every day.',
+        check: null,
       },
     ],
   },
@@ -126,14 +133,10 @@ const PUZZLES = [
     category: 'Place',
     puzzleNum: 2,
     freeClue: {
-      text: 'Sand between your toes.',
-      check: null,
+      text: 'Contains exactly two vowels.',
+      check: (w) => vowelCount(w) === 2,
     },
     clues: [
-      {
-        text: 'Contains exactly two vowels.',
-        check: (w) => vowelCount(w) === 2,
-      },
       {
         text: 'The two vowels sit side by side.',
         check: (w) => {
@@ -152,6 +155,10 @@ const PUZZLES = [
         text: 'Rhymes with TEACH.',
         check: (w) => rhymesWithAny(w, ['BEACH','TEACH','REACH','PEACH','LEACH','BLEACH','PREACH','EACH']),
       },
+      {
+        text: 'Sand between your toes.',
+        check: null,
+      },
     ],
   },
 
@@ -161,14 +168,10 @@ const PUZZLES = [
     category: 'Animal / Object',
     puzzleNum: 3,
     freeClue: {
-      text: 'It can lift enormous weight — or take flight.',
-      check: null,
+      text: 'Starts with a consonant cluster.',
+      check: (w) => startsWithConsonantCluster(w),
     },
     clues: [
-      {
-        text: 'Starts with a consonant cluster (two consonants in a row).',
-        check: (w) => startsWithConsonantCluster(w),
-      },
       {
         text: 'Contains exactly two vowels.',
         check: (w) => vowelCount(w) === 2,
@@ -178,8 +181,12 @@ const PUZZLES = [
         check: (w) => allUnique(w),
       },
       {
-        text: 'Rhymes with PLANE.',
-        check: (w) => rhymesWithAny(w, ['CRANE','PLANE','LANE','RAIN','MAIN','MANE','VANE','CANE','BANE','SANE','PANE','WANE','CHAIN','TRAIN','BRAIN','GRAIN','PLAIN','STAIN','DRAIN','SPAIN','GAIN','VAIN']),
+        text: 'Ends with a vowel.',
+        check: (w) => isVowel(up(w)[up(w).length - 1]),
+      },
+      {
+        text: 'It can lift enormous weight — or take flight.',
+        check: null,
       },
     ],
   },
@@ -190,29 +197,28 @@ const PUZZLES = [
     category: 'Concept',
     puzzleNum: 4,
     freeClue: {
-      text: 'It haunts.',
-      check: null,
+      text: 'Contains exactly one vowel.',
+      check: (w) => vowelCount(w) === 1,
     },
     clues: [
       {
-        text: 'Starts and ends with a consonant.',
-        check: (w) => startsAndEndsWith(w, 'consonant'),
+        text: 'Starts with a consonant cluster.',
+        check: (w) => startsWithConsonantCluster(w),
       },
       {
-        text: 'Contains exactly one vowel.',
-        check: (w) => vowelCount(w) === 1,
+        text: 'The vowel falls in the middle of the word.',
+        check: (w) => {
+          const s = up(w);
+          return isVowel(s[Math.floor(s.length / 2)]);
+        },
       },
       {
-        text: 'Ends in a cluster of two consonants.',
+        text: 'Ends with a consonant cluster.',
         check: (w) => endsWithConsonantCluster(w),
       },
       {
-        text: 'The single vowel falls in the middle of the word.',
-        check: (w) => {
-          const s = up(w);
-          const mid = Math.floor(s.length / 2);
-          return isVowel(s[mid]);
-        },
+        text: 'It haunts.',
+        check: null,
       },
     ],
   },
@@ -223,28 +229,28 @@ const PUZZLES = [
     category: 'Action',
     puzzleNum: 5,
     freeClue: {
-      text: 'A posture of reverence or submission.',
-      check: null,
+      text: 'Contains a double letter.',
+      check: (w) => hasConsecutiveDuplicate(w),
     },
     clues: [
-      {
-        text: 'The word contains a double letter.',
-        check: (w) => hasConsecutiveDuplicate(w),
-      },
       {
         text: 'The double letter is a vowel.',
         check: (w) => hasConsecutiveDuplicateVowel(w),
       },
       {
-        text: 'Starts with a consonant cluster (two consonants in a row).',
+        text: 'Starts with a consonant cluster.',
         check: (w) => startsWithConsonantCluster(w),
       },
       {
-        text: 'Ends in a single consonant (preceded by a vowel).',
+        text: 'Ends with a single consonant preceded by a vowel.',
         check: (w) => {
           const s = up(w);
           return isConsonant(s[s.length - 1]) && isVowel(s[s.length - 2]);
         },
+      },
+      {
+        text: 'A posture of reverence or submission.',
+        check: null,
       },
     ],
   },
@@ -255,14 +261,10 @@ const PUZZLES = [
     category: 'Object',
     puzzleNum: 6,
     freeClue: {
-      text: 'Light bends through it.',
-      check: null,
+      text: 'Starts with a consonant cluster.',
+      check: (w) => startsWithConsonantCluster(w),
     },
     clues: [
-      {
-        text: 'Starts with a consonant cluster (two consonants in a row).',
-        check: (w) => startsWithConsonantCluster(w),
-      },
       {
         text: 'Contains exactly one vowel.',
         check: (w) => vowelCount(w) === 1,
@@ -274,6 +276,10 @@ const PUZZLES = [
       {
         text: 'No letter appears more than once.',
         check: (w) => allUnique(w),
+      },
+      {
+        text: 'Light bends through it.',
+        check: null,
       },
     ],
   },
@@ -284,25 +290,25 @@ const PUZZLES = [
     category: 'Object',
     puzzleNum: 7,
     freeClue: {
-      text: 'It gives light in the dark.',
-      check: null,
+      text: 'The vowel is the second letter.',
+      check: (w) => isVowel(up(w)[1]),
     },
     clues: [
-      {
-        text: 'Starts and ends with a consonant.',
-        check: (w) => startsAndEndsWith(w, 'consonant'),
-      },
       {
         text: 'Contains exactly one vowel.',
         check: (w) => vowelCount(w) === 1,
       },
       {
-        text: 'The vowel is the second letter.',
-        check: (w) => isVowel(up(w)[1]),
+        text: 'Starts and ends with a consonant.',
+        check: (w) => startsAndEndsWith(w, 'consonant'),
       },
       {
         text: 'No letter appears more than once.',
         check: (w) => allUnique(w),
+      },
+      {
+        text: 'Carried by relay runners — or lights a cave.',
+        check: null,
       },
     ],
   },
@@ -313,25 +319,25 @@ const PUZZLES = [
     category: 'Action',
     puzzleNum: 8,
     freeClue: {
-      text: 'What you do when someone arrives.',
-      check: null,
+      text: 'Contains a double letter.',
+      check: (w) => hasConsecutiveDuplicate(w),
     },
     clues: [
-      {
-        text: 'The word contains a double letter.',
-        check: (w) => hasConsecutiveDuplicate(w),
-      },
       {
         text: 'The double letter is a vowel.',
         check: (w) => hasConsecutiveDuplicateVowel(w),
       },
       {
-        text: 'Starts with a consonant cluster (two consonants in a row).',
+        text: 'Starts with a consonant cluster.',
         check: (w) => startsWithConsonantCluster(w),
       },
       {
         text: 'Starts and ends with a consonant.',
         check: (w) => startsAndEndsWith(w, 'consonant'),
+      },
+      {
+        text: 'What you do when someone arrives.',
+        check: null,
       },
     ],
   },
@@ -342,14 +348,10 @@ const PUZZLES = [
     category: 'Object',
     puzzleNum: 9,
     freeClue: {
-      text: 'It makes its mark on the page.',
-      check: null,
+      text: 'Contains a double letter.',
+      check: (w) => hasConsecutiveDuplicate(w),
     },
     clues: [
-      {
-        text: 'The word contains a double letter.',
-        check: (w) => hasConsecutiveDuplicate(w),
-      },
       {
         text: 'The double letter is a consonant.',
         check: (w) => hasConsecutiveDuplicateConsonant(w),
@@ -357,6 +359,13 @@ const PUZZLES = [
       {
         text: 'Contains exactly two vowels.',
         check: (w) => vowelCount(w) === 2,
+      },
+      {
+        text: 'The first letter appears nowhere else in the word.',
+        check: (w) => {
+          const s = up(w);
+          return s.split('').filter(c => c === s[0]).length === 1;
+        },
       },
       {
         text: 'A writing instrument plucked from a bird\'s wing.',
@@ -371,25 +380,28 @@ const PUZZLES = [
     category: 'Object',
     puzzleNum: 10,
     freeClue: {
-      text: 'Used to leave a mark.',
-      check: null,
+      text: 'The vowel falls in the middle of the word.',
+      check: (w) => {
+        const s = up(w);
+        return isVowel(s[Math.floor(s.length / 2)]);
+      },
     },
     clues: [
-      {
-        text: 'Starts and ends with a consonant.',
-        check: (w) => startsAndEndsWith(w, 'consonant'),
-      },
       {
         text: 'Contains exactly one vowel.',
         check: (w) => vowelCount(w) === 1,
       },
       {
-        text: 'No letter appears more than once.',
-        check: (w) => allUnique(w),
+        text: 'Starts and ends with a consonant.',
+        check: (w) => startsAndEndsWith(w, 'consonant'),
       },
       {
-        text: 'Ends in a cluster of two consonants.',
+        text: 'Ends with a consonant cluster.',
         check: (w) => endsWithConsonantCluster(w),
+      },
+      {
+        text: 'Used to leave a mark.',
+        check: null,
       },
     ],
   },
@@ -400,12 +412,12 @@ const PUZZLES = [
     category: 'Adjective',
     puzzleNum: 11,
     freeClue: {
-      text: 'Speed personified.',
-      check: null,
+      text: 'Ends with a consonant cluster.',
+      check: (w) => endsWithConsonantCluster(w),
     },
     clues: [
       {
-        text: 'Starts with a consonant cluster (two consonants in a row).',
+        text: 'Starts with a consonant cluster.',
         check: (w) => startsWithConsonantCluster(w),
       },
       {
@@ -413,12 +425,12 @@ const PUZZLES = [
         check: (w) => vowelCount(w) === 1,
       },
       {
-        text: 'Ends in a cluster of two consonants.',
-        check: (w) => endsWithConsonantCluster(w),
-      },
-      {
         text: 'No letter appears more than once.',
         check: (w) => allUnique(w),
+      },
+      {
+        text: 'Moving without delay.',
+        check: null,
       },
     ],
   },
@@ -429,12 +441,12 @@ const PUZZLES = [
     category: 'Adjective / Object',
     puzzleNum: 12,
     freeClue: {
-      text: 'It conceals.',
-      check: null,
+      text: 'Ends with a consonant cluster.',
+      check: (w) => endsWithConsonantCluster(w),
     },
     clues: [
       {
-        text: 'Starts with a consonant cluster (two consonants in a row).',
+        text: 'Starts with a consonant cluster.',
         check: (w) => startsWithConsonantCluster(w),
       },
       {
@@ -458,25 +470,25 @@ const PUZZLES = [
     category: 'Object / Action',
     puzzleNum: 13,
     freeClue: {
-      text: 'It holds things firmly together.',
-      check: null,
+      text: 'Starts with a consonant cluster.',
+      check: (w) => startsWithConsonantCluster(w),
     },
     clues: [
-      {
-        text: 'Starts with a consonant cluster (two consonants in a row).',
-        check: (w) => startsWithConsonantCluster(w),
-      },
       {
         text: 'Contains exactly one vowel.',
         check: (w) => vowelCount(w) === 1,
       },
       {
-        text: 'Ends in a cluster of two consonants.',
+        text: 'Ends with a consonant cluster.',
         check: (w) => endsWithConsonantCluster(w),
       },
       {
         text: 'No letter appears more than once.',
         check: (w) => allUnique(w),
+      },
+      {
+        text: 'It holds things firmly together.',
+        check: null,
       },
     ],
   },
@@ -487,17 +499,17 @@ const PUZZLES = [
     category: 'Body Part',
     puzzleNum: 14,
     freeClue: {
-      text: 'Every hand has one.',
-      check: null,
+      text: 'Starts with a consonant cluster.',
+      check: (w) => startsWithConsonantCluster(w),
     },
     clues: [
       {
-        text: 'Starts with a consonant cluster (two consonants in a row).',
-        check: (w) => startsWithConsonantCluster(w),
-      },
-      {
         text: 'Contains exactly one vowel.',
         check: (w) => vowelCount(w) === 1,
+      },
+      {
+        text: 'Ends with a consonant cluster.',
+        check: (w) => endsWithConsonantCluster(w),
       },
       {
         text: 'No letter appears more than once.',
@@ -516,14 +528,10 @@ const PUZZLES = [
     category: 'Material',
     puzzleNum: 15,
     freeClue: {
-      text: 'Associated with elegance and age.',
-      check: null,
+      text: 'Starts with a vowel.',
+      check: (w) => isVowel(up(w)[0]),
     },
     clues: [
-      {
-        text: 'Starts with a vowel.',
-        check: (w) => isVowel(up(w)[0]),
-      },
       {
         text: 'Contains exactly two vowels.',
         check: (w) => vowelCount(w) === 2,
@@ -531,6 +539,16 @@ const PUZZLES = [
       {
         text: 'No letter appears more than once.',
         check: (w) => allUnique(w),
+      },
+      {
+        text: 'The two vowels are not adjacent.',
+        check: (w) => {
+          const s = up(w);
+          for (let i = 0; i < s.length - 1; i++) {
+            if (isVowel(s[i]) && isVowel(s[i + 1])) return false;
+          }
+          return vowelCount(w) === 2;
+        },
       },
       {
         text: 'The colour of old piano keys and elephant tusks.',

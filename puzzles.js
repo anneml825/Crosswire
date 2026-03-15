@@ -342,7 +342,7 @@ const PUZZLES = [
     category: 'Object',
     puzzleNum: 9,
     freeClue: {
-      text: 'A writing instrument from a feather.',
+      text: 'It makes its mark on the page.',
       check: null,
     },
     clues: [
@@ -359,11 +359,8 @@ const PUZZLES = [
         check: (w) => vowelCount(w) === 2,
       },
       {
-        text: 'The first letter appears nowhere else in the word.',
-        check: (w) => {
-          const s = up(w);
-          return s.split('').filter(c => c === s[0]).length === 1;
-        },
+        text: 'A writing instrument plucked from a bird\'s wing.',
+        check: null,
       },
     ],
   },
@@ -432,7 +429,7 @@ const PUZZLES = [
     category: 'Adjective / Object',
     puzzleNum: 12,
     freeClue: {
-      text: 'Unable to see — or a window covering.',
+      text: 'It conceals.',
       check: null,
     },
     clues: [
@@ -449,8 +446,8 @@ const PUZZLES = [
         check: (w) => allUnique(w),
       },
       {
-        text: 'Ends with a consonant cluster.',
-        check: (w) => endsWithConsonantCluster(w),
+        text: 'Can mean unable to see — or a shade on a window.',
+        check: null,
       },
     ],
   },
@@ -490,7 +487,7 @@ const PUZZLES = [
     category: 'Body Part',
     puzzleNum: 14,
     freeClue: {
-      text: 'The widest of the five.',
+      text: 'Every hand has one.',
       check: null,
     },
     clues: [
@@ -507,8 +504,8 @@ const PUZZLES = [
         check: (w) => allUnique(w),
       },
       {
-        text: 'Ends with a consonant cluster.',
-        check: (w) => endsWithConsonantCluster(w),
+        text: 'The shortest and widest finger.',
+        check: null,
       },
     ],
   },
@@ -519,7 +516,7 @@ const PUZZLES = [
     category: 'Material',
     puzzleNum: 15,
     freeClue: {
-      text: 'White as a tusk.',
+      text: 'Associated with elegance and age.',
       check: null,
     },
     clues: [
@@ -536,14 +533,8 @@ const PUZZLES = [
         check: (w) => allUnique(w),
       },
       {
-        text: 'The two vowels are not adjacent to each other.',
-        check: (w) => {
-          const s = up(w);
-          for (let i = 0; i < s.length - 1; i++) {
-            if (isVowel(s[i]) && isVowel(s[i + 1])) return false;
-          }
-          return vowelCount(w) === 2;
-        },
+        text: 'The colour of old piano keys and elephant tusks.',
+        check: null,
       },
     ],
   },

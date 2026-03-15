@@ -267,9 +267,10 @@
   }
 
   function scoreLabel() {
-    if (revealedClues === 0) return 'Genius \uD83D\uDD25';   // 🔥
-    if (revealedClues === 1) return 'Sharp \uD83E\uDDE0';    // 🧠
-    if (revealedClues === 2) return 'Strong';
+    const score = revealedClues + wrongGuesses;
+    if (score === 0) return 'Genius \uD83D\uDD25';   // 🔥
+    if (score === 1) return 'Sharp \uD83E\uDDE0';    // 🧠
+    if (score <= 3)  return 'Strong';
     return 'Got there';
   }
 

@@ -493,3 +493,64 @@ main {
   border-top: 1px solid var(--border);
   min-height: 1rem;
 }
+
+.close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--mid);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem;
+}
+
+.close-btn:hover {
+  color: var(--ink);
+}
+
+.win-card {
+  position: relative;
+}
+
+/* ── Dev bar (prototype only) ───────────── */
+
+.dev-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--ink);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  z-index: 100;
+}
+
+.dev-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--mid);
+}
+
+.dev-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  background: none;
+  color: var(--cream);
+  border: 1px solid var(--mid);
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.dev-btn:hover {
+  border-color: var(--cream);
+}

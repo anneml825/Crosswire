@@ -81,6 +81,7 @@
   <!-- Win overlay -->
   <div class="win-overlay" id="win-overlay" aria-hidden="true" hidden>
     <div class="win-card">
+      <button class="close-btn" id="close-btn" aria-label="Close">✕</button>
       <div class="win-eyebrow">SOLVED</div>
       <div class="win-score-label" id="win-score-label"></div>
       <div class="win-stats" id="win-stats"></div>
@@ -89,6 +90,13 @@
       <div class="copied-msg" id="copied-msg" aria-live="polite"></div>
       <div class="streak-line" id="streak-line"></div>
     </div>
+  </div>
+
+  <!-- Dev nav (prototype only) -->
+  <div class="dev-bar">
+    <span class="dev-label">PROTOTYPE</span>
+    <button class="dev-btn" id="prev-puzzle-btn">← PREV</button>
+    <button class="dev-btn" id="next-puzzle-btn">NEXT →</button>
   </div>
 
   <script src="puzzles.js"></script>

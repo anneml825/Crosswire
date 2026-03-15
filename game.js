@@ -313,6 +313,10 @@
     if (streak > 1) {
       streakEl.textContent = streak + '\u2002day streak';
     }
+
+    document.getElementById('close-btn').addEventListener('click', function () {
+      document.getElementById('win-overlay').hidden = true;
+    });
   }
 
   function flashCopied() {
@@ -423,12 +427,37 @@
   }
 
 
+  /* ── Dev nav (prototype only) ───────────────── */
+
+  const DEV_OFFSET_KEY = 'crosswire-dev-offset';
+
+  function getDevOffset() {
+    try { return parseInt(localStorage.getItem(DEV_OFFSET_KEY) || '0', 10); } catch (_) { return 0; }
+  }
+
+  function setDevOffset(n) {
+    try { localStorage.setItem(DEV_OFFSET_KEY, String(n)); } catch (_) {}
+  }
+
+  function setupDevNav() {
+    document.getElementById('next-puzzle-btn').addEventListener('click', function () {
+      setDevOffset(getDevOffset() + 1);
+      location.reload();
+    });
+    document.getElementById('prev-puzzle-btn').addEventListener('click', function () {
+      setDevOffset(getDevOffset() - 1);
+      location.reload();
+    });
+  }
+
+
   /* ── Start ──────────────────────────────────── */
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function () { init(); setupDevNav(); });
   } else {
     init();
+    setupDevNav();
   }
 
 })();

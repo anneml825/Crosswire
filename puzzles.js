@@ -557,10 +557,14 @@ function getTodaysPuzzle() {
   // Anchor: puzzle #001 (FLOOR) on 2026-01-01
   const anchor = new Date('2026-01-01T00:00:00');
   const now    = new Date();
-  // Zero out time so each day maps cleanly
   now.setHours(0, 0, 0, 0);
   const msPerDay  = 24 * 60 * 60 * 1000;
   const dayOffset = Math.floor((now - anchor) / msPerDay);
-  const index     = ((dayOffset % PUZZLES.length) + PUZZLES.length) % PUZZLES.length;
+
+  // Dev offset lets you step through puzzles without waiting a day
+  let devOffset = 0;
+  try { devOffset = parseInt(localStorage.getItem('crosswire-dev-offset') || '0', 10); } catch (_) {}
+
+  const index = (((dayOffset + devOffset) % PUZZLES.length) + PUZZLES.length) % PUZZLES.length;
   return PUZZLES[index];
 }
